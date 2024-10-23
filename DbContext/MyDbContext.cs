@@ -1,9 +1,49 @@
-﻿using appAPI.Data;
+﻿
+
 using Microsoft.EntityFrameworkCore;
 
-public class MyDbContext : DbContext
+namespace appAPI.Data
 {
-    public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
+    public class MyDbContext : DbContext
+    {
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+        {
+            // Configurar el comportamiento de la conexión
+            Database.SetCommandTimeout(TimeSpan.FromSeconds(30));
+        }
 
-    public DbSet<TAREA> TAREA { get; set; } 
+        // Remover estas propiedades estáticas ya que no son necesarias
+        // public static string ConnectionString { get; set; }
+        // public static DbContextOptions<MyDbContext> Options { get; set; }
+
+        public DbSet<TAREA> TAREA { get; set; }
+        public DbSet<USER> USER { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TAREA>(entity =>
+            {
+                // Añadir índices para mejorar el rendimiento
+                entity.HasIndex(e => e.USERID);
+                entity.HasIndex(e => e.STATUS);
+
+                // Configurar el tipo de datos específicamente
+                entity.Property(e => e.DESCRIPTION).HasMaxLength(500);
+            });
+        }
+
+        // Agregar un método específico para consultas de solo lectura
+        public IQueryable<TAREA> GetTareasReadOnly()
+        {
+            return TAREA.AsNoTracking();
+        }
+    }
 }
