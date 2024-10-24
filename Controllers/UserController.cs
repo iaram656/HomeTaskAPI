@@ -39,6 +39,23 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [HttpGet("a")]
+    public async Task<ActionResult<string>> GetA()
+    {
+        try
+        {
+
+            return Ok("OK");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, "Error interno del servidor");
+        }
+    }
+
+
+
     [HttpPost("update")]
     public async Task<ActionResult<bool>> UpdateUser(UserDTO us)
     {

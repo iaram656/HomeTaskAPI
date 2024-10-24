@@ -2,7 +2,12 @@ using appAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using DotNetEnv;  // Asegúrate de añadir esta línea
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Cargar variables de entorno desde el archivo .env
+Env.Load();
 
 // Configurar CORS
 builder.Services.AddCors(options =>
@@ -15,7 +20,6 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();  // Permitir cualquier encabezado
     });
 });
-
 
 // Agregar servicios a la aplicación
 builder.Services.AddControllers();
@@ -55,13 +59,6 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
-
-// Agregar los using necesarios
-// ... resto del código ...
-
-// Modificar el Health Check así:
-builder.Services.AddHealthChecks()
-    .AddCheck<DatabaseHealthCheck>("Database");
 
 // Agregar esta nueva clase en tu proyecto (puede ser en un archivo nuevo llamado DatabaseHealthCheck.cs)
 public class DatabaseHealthCheck : IHealthCheck
