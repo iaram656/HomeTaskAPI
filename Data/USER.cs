@@ -9,5 +9,7 @@ namespace appAPI.Data
         public int ID { get; set; }
 
         public string NAME { get; set; }
+
+        public int PUNTOS { get; set; }
     }
 }
