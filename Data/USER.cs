@@ -10,6 +10,8 @@ namespace appAPI.Data
 
         public string NAME { get; set; }
 
+        public string PASSWORD { get; set; }
+
         public int PUNTOS { get; set; }
     }
 }
