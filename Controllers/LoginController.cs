@@ -19,6 +19,11 @@ public class LoginController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<bool>> Login([FromBody] LoginDTO loginDto)
     {
+        string password = "ogarm74";
+
+        // Crear un hash de la contraseña
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
 
         if (loginDto == null || string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
         {
