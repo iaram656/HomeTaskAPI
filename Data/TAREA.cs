@@ -12,6 +12,6 @@ namespace appAPI.Data
         public long USERID { get; set; }
         public DateTime LIMITDATE {  get; set; }
         public bool STATUS {  get; set; }
-
+        public long TAREAID { get; set; }
     }
 }

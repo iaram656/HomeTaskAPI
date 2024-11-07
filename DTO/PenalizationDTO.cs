@@ -8,5 +8,7 @@
 
         public DateTime Date { get; set; }
         public long Points { get; set; }
+
+        public long PenId { get; set; }
     }
 }

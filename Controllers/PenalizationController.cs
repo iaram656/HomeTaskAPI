@@ -28,8 +28,14 @@ public class PenalizationController : ControllerBase
                 REASON = pen.Reason,
                 DATE = DateTime.UtcNow,
                 POINTS = pen.Points,
+                PENID = pen.PenId
             };
-            _dbContext.PENALIZATION.Add(t);
+            await _dbContext.PENALIZATION.AddAsync(t);
+            USER u = await _dbContext.USER.Where(c => c.ID == t.USERID).FirstOrDefaultAsync();
+            if(u != null)
+            {
+                u.PUNTOS = u.PUNTOS - (int)pen.Points;
+            }
             await _dbContext.SaveChangesAsync();
             return Ok(true);
         }

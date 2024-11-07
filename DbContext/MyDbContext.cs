@@ -19,6 +19,8 @@ namespace appAPI.Data
         public DbSet<TAREA> TAREA { get; set; }
         public DbSet<USER> USER { get; set; }
         public DbSet<PENALIZATION> PENALIZATION { get; set; }
+        public DbSet<PENALIZATIONS> PENALIZATIONS { get; set; }
+        public DbSet<TRABAJOS> TRABAJOS { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
