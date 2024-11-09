@@ -22,7 +22,6 @@ public class UserController : ControllerBase
         try
         {
             var users = await _dbContext.USER
-                .AsNoTracking()
                 .Select(c => new UserDTO
                 {
                     Id = c.ID,
